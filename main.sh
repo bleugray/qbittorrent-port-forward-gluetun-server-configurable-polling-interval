@@ -8,13 +8,13 @@ gtn_addr="${GTN_ADDR:-http://localhost:8000}" # ex. http://10.0.1.48:8000
 
 if [[ -n "$GTN_USERNAME" && -n "$GTN_PASSWORD" ]]; then
     echo "Attempting to retrieve port from Gluetun via username and password..."
-    port_number=$(curl --fail --silent --show-error --user "$GTN_USERNAME:$GTN_PASSWORD" $gtn_addr/v1/openvpn/portforwarded | jq '.port')
+    port_number=$(curl --fail --silent --show-error --user "$GTN_USERNAME:$GTN_PASSWORD" $gtn_addr/v1/portforward | jq '.port')
 elif [ -n "$GTN_APIKEY" ]; then
     echo "Attempting to retrieve port from Gluetun via api key..."
-    port_number=$(curl --fail --silent --show-error --header "X-API-Key: $GTN_APIKEY" $gtn_addr/v1/openvpn/portforwarded | jq '.port')
+    port_number=$(curl --fail --silent --show-error --header "X-API-Key: $GTN_APIKEY" $gtn_addr/v1/portforward | jq '.port')
 else
     echo "Attempting to retrieve port from Gluetun without authentication..."
-    port_number=$(curl --fail --silent --show-error  $gtn_addr/v1/openvpn/portforwarded | jq '.port')
+    port_number=$(curl --fail --silent --show-error  $gtn_addr/v1/portforward | jq '.port')
 fi
 
 if [ ! "$port_number" ] || [ "$port_number" = "0" ]; then
