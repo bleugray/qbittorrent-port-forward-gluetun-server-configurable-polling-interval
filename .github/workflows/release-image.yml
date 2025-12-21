@@ -2,7 +2,7 @@ name: Build and push release image
 
 on:
   release:
-    types: [created]
+    types: [published]
   # workflow_dispatch allows manual triggering to backfill Docker images for existing releases
   # Go to Actions > Build and push release image > Run workflow, then enter the tag name
   workflow_dispatch:
@@ -20,8 +20,22 @@ jobs:
     name: Build Docker image and push to registries
     runs-on: ubuntu-latest
     steps:
+      # Determine tag name: use release tag when triggered by release event,
+      # otherwise use the tag_name input from workflow_dispatch (for backfilling)
+      - name: Set tag name
+        id: set_tag
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=${{ inputs.tag_name }}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          # Checkout the release tag commit
+          ref: ${{ steps.set_tag.outputs.tag }}
 
       - name: Set up Docker Buildx
         id: buildx
@@ -39,17 +53,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      # Determine tag name: use release tag when triggered by release event,
-      # otherwise use the tag_name input from workflow_dispatch (for backfilling)
-      - name: Set tag name
-        id: set_tag
-        run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
-          else
-            echo "tag=${{ inputs.tag_name }}" >> $GITHUB_OUTPUT
-          fi
 
       - name: Build and push
         id: docker_build_push
