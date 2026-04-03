@@ -15,6 +15,7 @@ A shell script and Docker container for automatically setting qBittorrent's list
 | GTN_USERNAME | `username`                  | *None*                  | Username for authentication to gluetun control server (if basic auth enabled)  |
 | GTN_PASSWORD | `password`                  | *None*                  | Password for authentication to gluetun control server (if basic auth enabled)  |
 | GTN_APIKEY   | `apikey`                    | *None*                  | API Key for authentication to gluetun control server (if API key auth enabled) |
+| CRON_INTERVAL| `*/5 * * * *`               | `*/10 * * * *`          | Cron schedule for how often to sync the port                                   |
 
 
 ## Gluetun Control Server Authentication
