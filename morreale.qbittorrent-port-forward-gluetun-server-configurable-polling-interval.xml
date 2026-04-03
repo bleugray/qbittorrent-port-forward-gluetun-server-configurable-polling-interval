@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>qbittorrent-port-forward-gluetun-server-configurable-polling-interval</Name>
+  <Repository>morreale/qbittorrent-port-forward-gluetun-server-configurable-polling-interval:latest</Repository>
+  <Registry>https://hub.docker.com/r/morreale/qbittorrent-port-forward-gluetun-server-configurable-polling-interval</Registry>
+  <Network>bridge</Network>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/bleugray/qbittorrent-port-forward-gluetun-server-configurable-polling-interval</Support>
+  <Project>https://github.com/bleugray/qbittorrent-port-forward-gluetun-server-configurable-polling-interval</Project>
+  <Overview>A shell script and Docker container for automatically setting qBittorrent's listening port from Gluetun's control server, with a configurable polling interval.</Overview>
+  <Category>Tools: Network:</Category>
+  <Icon>https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/qbittorrent-icon.png</Icon>
+  <ExtraParams>--restart unless-stopped</ExtraParams>
+  <Config Name="QBT_USERNAME" Target="QBT_USERNAME" Default="admin" Mode="" Description="qBittorrent username" Type="Variable" Display="always" Required="false" Mask="false">admin</Config>
+  <Config Name="QBT_PASSWORD" Target="QBT_PASSWORD" Default="adminadmin" Mode="" Description="qBittorrent password" Type="Variable" Display="always" Required="false" Mask="true">adminadmin</Config>
+  <Config Name="QBT_ADDR" Target="QBT_ADDR" Default="http://localhost:8080" Mode="" Description="HTTP URL for the qBittorrent web UI, with port" Type="Variable" Display="always" Required="true" Mask="false">http://localhost:8080</Config>
+  <Config Name="GTN_ADDR" Target="GTN_ADDR" Default="http://localhost:8000" Mode="" Description="HTTP URL for the Gluetun control server, with port" Type="Variable" Display="always" Required="true" Mask="false">http://localhost:8000</Config>
+  <Config Name="GTN_USERNAME" Target="GTN_USERNAME" Default="" Mode="" Description="Username for Gluetun control server basic auth (if enabled)" Type="Variable" Display="always" Required="false" Mask="false"></Config>
+  <Config Name="GTN_PASSWORD" Target="GTN_PASSWORD" Default="" Mode="" Description="Password for Gluetun control server basic auth (if enabled)" Type="Variable" Display="always" Required="false" Mask="true"></Config>
+  <Config Name="GTN_APIKEY" Target="GTN_APIKEY" Default="" Mode="" Description="API key for Gluetun control server API key auth (if enabled)" Type="Variable" Display="always" Required="false" Mask="true"></Config>
+  <Config Name="CRON_INTERVAL" Target="CRON_INTERVAL" Default="0 * * * *" Mode="" Description="Cron schedule for how often to sync the port (e.g. */30 * * * * for every 30 minutes)" Type="Variable" Display="always" Required="false" Mask="false">0 * * * *</Config>
+</Container>
